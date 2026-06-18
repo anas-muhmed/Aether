@@ -6,7 +6,7 @@ A premium, responsive e-commerce homepage created for a front-end internship eva
 
 ## Live demo
 
-Add the deployed URL here after publishing with Vercel, Netlify, or GitHub Pages.
+[View the live demo on Vercel](https://aether-rust-phi.vercel.app/)
 
 ## Technology stack
 
