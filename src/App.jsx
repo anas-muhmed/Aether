@@ -473,33 +473,37 @@ export default function App() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.98, y: 10 }}
                 transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="fixed inset-x-0 bottom-0 z-[100] max-h-[92dvh] overflow-y-auto rounded-t-[2rem] bg-white shadow-2xl dark:bg-[#101114] md:left-1/2 md:top-1/2 md:max-h-[90vh] md:w-[min(92vw,52rem)] md:-translate-x-1/2 md:-translate-y-1/2 md:overflow-hidden md:rounded-[2rem]"
+                className="fixed inset-x-0 bottom-0 z-[100] flex max-h-[92dvh] w-[min(100%,calc(100vw-2rem))] flex-col overflow-hidden rounded-t-[2rem] bg-white shadow-2xl dark:bg-[#101114] sm:inset-x-4 md:inset-x-auto md:top-1/2 md:max-h-[90vh] md:w-[min(90vw,1000px)] md:flex-row md:overflow-hidden md:rounded-[2rem] md:-translate-x-1/2 md:-translate-y-1/2"
                 role="dialog"
                 aria-modal="true"
                 aria-label={`${activeProduct.name} quick view`}
               >
-                <div className="grid md:grid-cols-[1fr_1fr]">
-                  <div className="relative aspect-[4/3] bg-black/5 dark:bg-white/5 md:aspect-auto md:min-h-[32rem]">
+                <div className="relative w-full flex-shrink-0 md:w-1/2">
+                  <div className="aspect-[4/3] bg-black/5 dark:bg-white/5 md:aspect-auto md:h-full">
                     <img src={activeProduct.image} alt={activeProduct.name} width="1024" height="1024" loading="eager" decoding="async" className="h-full w-full object-cover" />
                   </div>
-                  <div className="p-5 sm:p-6 md:p-8">
+                </div>
+                <div className="flex min-h-0 flex-col overflow-y-auto md:w-1/2">
+                  <div className="flex flex-1 flex-col p-5 sm:p-6 md:p-8">
                     <div className="flex items-start justify-between gap-4">
-                      <div>
+                      <div className="flex-1">
                         <p className="eyebrow">Quick view</p>
                         <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl">{activeProduct.name}</h2>
                       </div>
-                      <button type="button" onClick={closeQuickView} className="icon-button" aria-label="Close quick view">
+                      <button type="button" onClick={closeQuickView} className="icon-button mt-1 flex-shrink-0" aria-label="Close quick view">
                         <X size={18} />
                       </button>
                     </div>
-                    <p className="mt-4 text-sm leading-relaxed text-black/60 dark:text-white/55">{activeProduct.description}</p>
+                    <p className="mt-4 flex-1 text-sm leading-relaxed text-black/60 dark:text-white/55">{activeProduct.description}</p>
                     <div className="mt-5 flex items-center gap-2 text-sm text-black/60 dark:text-white/55">
                       <Star size={14} fill="currentColor" />
                       <span>{activeProduct.rating}</span>
                       <span>•</span>
                       <span>{activeProduct.reviews} reviews</span>
                     </div>
-                    <div className="mt-6 flex flex-col gap-4 rounded-2xl bg-black/3 px-4 py-4 dark:bg-white/5 sm:flex-row sm:items-center sm:justify-between">
+                  </div>
+                  <div className="border-t border-black/5 p-5 dark:border-white/10 sm:p-6 md:p-8">
+                    <div className="flex flex-col gap-4 rounded-2xl bg-black/3 px-4 py-4 dark:bg-white/5 sm:flex-row sm:items-center sm:justify-between">
                       <div>
                         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-black/45 dark:text-white/40">Price</p>
                         <p className="font-display text-3xl font-bold">${activeProduct.price}</p>
