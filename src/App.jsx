@@ -111,6 +111,20 @@ export default function App() {
     window.localStorage.setItem('aether-cart', JSON.stringify(cartItems.map(({ id, quantity }) => ({ id, quantity }))))
   }, [cartItems])
 
+  useEffect(() => {
+    if (typeof document === 'undefined') {
+      return undefined
+    }
+
+    const shouldLockScroll = cartOpen || activeProduct
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = shouldLockScroll ? 'hidden' : previousOverflow
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [activeProduct, cartOpen])
+
   useEffect(() => () => {
     if (toastTimerRef.current) {
       window.clearTimeout(toastTimerRef.current)
@@ -452,27 +466,27 @@ export default function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[90] cursor-default bg-black/55"
+                className="fixed inset-0 z-[90] cursor-default bg-black/55 backdrop-blur-[2px]"
               />
               <Motion.div
                 initial={{ opacity: 0, scale: 0.96, y: 12 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.98, y: 10 }}
                 transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="fixed left-1/2 top-1/2 z-[100] w-[min(92vw,52rem)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[2rem] bg-white shadow-2xl dark:bg-[#101114]"
+                className="fixed inset-x-0 bottom-0 z-[100] max-h-[92dvh] overflow-y-auto rounded-t-[2rem] bg-white shadow-2xl dark:bg-[#101114] md:left-1/2 md:top-1/2 md:max-h-[90vh] md:w-[min(92vw,52rem)] md:-translate-x-1/2 md:-translate-y-1/2 md:overflow-hidden md:rounded-[2rem]"
                 role="dialog"
                 aria-modal="true"
                 aria-label={`${activeProduct.name} quick view`}
               >
                 <div className="grid md:grid-cols-[1fr_1fr]">
-                  <div className="relative bg-black/5 dark:bg-white/5">
+                  <div className="relative aspect-[4/3] bg-black/5 dark:bg-white/5 md:aspect-auto md:min-h-[32rem]">
                     <img src={activeProduct.image} alt={activeProduct.name} width="1024" height="1024" loading="eager" decoding="async" className="h-full w-full object-cover" />
                   </div>
-                  <div className="p-6 sm:p-8">
+                  <div className="p-5 sm:p-6 md:p-8">
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="eyebrow">Quick view</p>
-                        <h2 className="mt-2 font-display text-3xl font-bold">{activeProduct.name}</h2>
+                        <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl">{activeProduct.name}</h2>
                       </div>
                       <button type="button" onClick={closeQuickView} className="icon-button" aria-label="Close quick view">
                         <X size={18} />
@@ -485,12 +499,12 @@ export default function App() {
                       <span>•</span>
                       <span>{activeProduct.reviews} reviews</span>
                     </div>
-                    <div className="mt-6 flex items-center justify-between rounded-2xl bg-black/3 px-4 py-3 dark:bg-white/5">
+                    <div className="mt-6 flex flex-col gap-4 rounded-2xl bg-black/3 px-4 py-4 dark:bg-white/5 sm:flex-row sm:items-center sm:justify-between">
                       <div>
                         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-black/45 dark:text-white/40">Price</p>
                         <p className="font-display text-3xl font-bold">${activeProduct.price}</p>
                       </div>
-                      <button type="button" onClick={() => addToCart(activeProduct)} className="button-primary">
+                      <button type="button" onClick={() => addToCart(activeProduct)} className="button-primary w-full justify-center sm:w-auto">
                         Add to cart <Plus size={16} />
                       </button>
                     </div>
