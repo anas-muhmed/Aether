@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-black/10 dark:border-white/10;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 min-w-[320px] bg-paper font-sans text-ink antialiased dark:bg-[#0d0e11] dark:text-white;
+  }
+
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button:focus-visible, a:focus-visible, input:focus-visible {
+    @apply outline-none ring-2 ring-aether ring-offset-2 ring-offset-paper dark:ring-offset-[#0d0e11];
+  }
+
+  ::selection {
+    @apply bg-aether text-white;
+  }
+}
+
+@layer components {
+  .section-shell {
+    @apply mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24;
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1200px;
+  }
+
+  .section-title {
+    @apply mt-3 max-w-3xl font-display text-3xl font-bold leading-tight tracking-[-0.05em] sm:text-5xl;
+  }
+
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.18em] text-black/45 dark:text-white/40;
+  }
+
+  .button-primary {
+    @apply inline-flex min-h-12 items-center gap-2 rounded-full bg-ink px-6 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 dark:bg-white dark:text-ink;
+  }
+
+  .button-secondary {
+    @apply inline-flex min-h-12 items-center rounded-full border px-6 text-sm font-bold transition;
+  }
+
+  .icon-button {
+    @apply grid size-10 place-items-center rounded-full transition hover:bg-black/5 dark:hover:bg-white/10;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
